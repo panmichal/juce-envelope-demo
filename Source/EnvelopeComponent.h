@@ -46,8 +46,16 @@ private:
     float release = 120;
     
     bool isChangingAttack = false;
-    enum ParameterToChange { ATTACK, DECAY, SUSTAIN, RELEASE, NONE };
-    ParameterToChange currentParameter = NONE;
+    enum class Parameter
+    {
+        Attack,
+        Decay,
+        Sustain,
+        Release,
+        None
+        
+    };
+    Parameter currentParameter =  Parameter::None;
     
     EnvelopePointComponent envelopePoint;
 };

@@ -72,19 +72,19 @@ void EnvelopeComponent::mouseMove(const juce::MouseEvent & e)
 
 void EnvelopeComponent::mouseDrag(const juce::MouseEvent & e)
 {
-    if (currentParameter == ATTACK) {
+    if (currentParameter == Parameter::Attack) {
         attack = std::max(e.getPosition().x, 0);
         envelopePoint.setBounds(attack - 10, getHeight() - 200 - 10, 20, 20);
         repaint();
-    } else if (currentParameter == DECAY) {
+    } else if (currentParameter == Parameter::Decay) {
         decay = std::max(attack, (float)e.getPosition().x) - attack;
         envelopePoint.setBounds(attack + decay - 10, getHeight() - sustain - 10, 20, 20);
         repaint();
-    } else if (currentParameter == SUSTAIN) {
+    } else if (currentParameter == Parameter::Sustain) {
         sustain = std::min(getHeight() - e.getPosition().y, ENVELOPE_HEIGHT);
         envelopePoint.setBounds(attack + decay + SUSTAIN_WIDTH - 10, getHeight() - sustain - 10, 20, 20);
         repaint();
-    } else if (currentParameter == RELEASE) {
+    } else if (currentParameter == Parameter::Release) {
         release = e.getPosition().x - SUSTAIN_WIDTH - decay - attack;
         envelopePoint.setBounds(attack + decay + SUSTAIN_WIDTH + release - 10, getHeight() - 10, 20, 20);
         repaint();
@@ -100,21 +100,21 @@ void EnvelopeComponent::mouseDown(const juce::MouseEvent &e)
     
     if (e.getMouseDownX() > attackPos.x - 10 && e.getMouseDownX() < attackPos.x + 10 &&
         e.getMouseDownY() > attackPos.y - 10 && e.getMouseDownY() < attackPos.y + 10) {
-        currentParameter = ATTACK;
+        currentParameter = Parameter::Attack;
     } else if (e.getMouseDownX() > sustainPos.x - 10 && e.getMouseDownX() < sustainPos.x + 10 && e.getMouseDownY() > sustainPos.y - 10 && e.getMouseDownY() < sustainPos.y + 10) {
-        currentParameter = SUSTAIN;
+        currentParameter = Parameter::Sustain;
     } else if (e.getMouseDownX() > decayPos.x - 10 && e.getMouseDownX() < decayPos.x + 10 && e.getMouseDownY() > decayPos.y - 10 && e.getMouseDownY() < decayPos.y + 10) {
-        currentParameter = DECAY;
+        currentParameter = Parameter::Decay;
     } else if (e.getMouseDownX() > releasePos.x - 10 && e.getMouseDownX() < releasePos.x + 10 && e.getMouseDownY() > releasePos.y - 10 && e.getMouseDownY() < releasePos.y + 10) {
-        currentParameter = RELEASE;
+        currentParameter = Parameter::Release;
     } else {
-        currentParameter = NONE;
+        currentParameter = Parameter::None;
     }
 }
 
 void EnvelopeComponent::mouseUp(const juce::MouseEvent &e)
 {
-    currentParameter = NONE;
+    currentParameter = Parameter::None;
 }
 
 juce::Point<float> EnvelopeComponent::getAttackPosition()
